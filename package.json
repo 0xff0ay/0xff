@@ -1,0 +1,29 @@
+{
+  "name": "0xff",
+  "scripts": {
+    "dev": "nuxt dev --extends docus",
+    "build": "nuxt build --extends docus"
+  },
+  "dependencies": {
+    "@ant-design-vue/nuxt": "^1.4.6",
+    "@bubblesortt/nuxt-es-toolkit": "^1.0.10",
+    "@coremyslo/nuxt-icon-font": "^1.2.0",
+    "@formkit/auto-animate": "^0.9.0",
+    "@formkit/nuxt": "^1.7.2",
+    "@i2d/nuxt-pdf-frame": "^0.6.1",
+    "@kgierke/nuxt-basic-auth": "^1.7.0",
+    "@nuxt/a11y": "^1.0.0-alpha.1",
+    "@nuxt/eslint": "^1.15.2",
+    "@nuxt/fonts": "^0.14.0",
+    "@nuxt/hints": "^1.0.0-alpha.10",
+    "@nuxt/icon": "^2.2.1",
+    "@nuxtjs/color-mode": "^4.0.0",
+    "@nuxtjs/device": "^4.0.0",
+    "@nuxtjs/emotion": "^1.0.2",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "@nuxtjs/storybook": "^9.0.1",
+    "better-sqlite3": "^12.6.2",
+    "docus": "latest",
+    "nuxt": "^4.3.1"
+  }
+}
