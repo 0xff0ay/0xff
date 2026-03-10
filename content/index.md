@@ -86,19 +86,22 @@ Breaking systems to make them stronger. I specialize in vulnerability research, 
   :::
 
 #right
-  :::div{.relative.flex.items-center.justify-center.h-full}
-    ::::div{.absolute.inset-0.bg-gradient-to-br.from-primary/20.to-transparent.rounded-3xl.blur-3xl}
+  :::div{.relative.flex.flex-col.items-center.justify-center.h-full.gap-6}
+    ::::div{.absolute.inset-0.bg-gradient-to-br.from-primary/20.to-transparent.rounded-full.blur-3xl}
     ::::
-    ::::u-color-mode-image
-    ---
-    dark: /0xff-dark.svg
-    light: /0xff-light.svg
-    class: "w-full max-w-lg relative z-10"
-    ---
+    ::::div{.relative.z-10}
+      [![0xff](https://avatars.githubusercontent.com/u/264521594?v=4){width="320" height="320" .rounded-full .border-4 .border-primary .shadow-2xl .object-cover}](https://github.com/0xff0ay){target="_blank"}
+    ::::
+    ::::div{.relative.z-10.flex.items-center.gap-2.rounded-full.px-4.py-2.border.border-primary/30.bg-gray-900/80}
+      :::::div{.w-3.h-3.bg-green-500.rounded-full.animate-pulse}
+      :::::
+      :::::div{.text-sm.text-gray-300.font-mono}
+      hunting bugs...
+      :::::
     ::::
   :::
-::
 
+::
 
 <!-- ============================================ -->
 <!-- SPONSORS -->
@@ -233,7 +236,6 @@ This project is proudly supported by the following sponsors. Their generous supp
 
   :::
 ::
-
 
 <!-- ============================================ -->
 <!-- STATS BAR -->
