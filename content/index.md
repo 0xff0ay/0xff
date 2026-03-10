@@ -99,6 +99,142 @@ Breaking systems to make them stronger. I specialize in vulnerability research, 
   :::
 ::
 
+
+<!-- ============================================ -->
+<!-- SPONSORS -->
+<!-- ============================================ -->
+
+::u-page-section
+---
+headline: "// SPONSORS"
+---
+#title
+Our [Sponsors]{.text-primary}
+
+#description
+This project is proudly supported by the following sponsors. Their generous support makes this research and free content possible for the entire security community.
+
+#default
+  :::div{.flex.flex-col.items-center.text-center.w-full.gap-16}
+
+  <!-- Platinum Sponsor -->
+  ::::div{.flex.flex-col.items-center.gap-6.w-full}
+    :::::u-badge
+    ---
+    color: primary
+    variant: subtle
+    size: lg
+    icon: i-lucide-gem
+    ---
+    Platinum Sponsor
+    :::::
+
+    ::::::a{href="https://1cloudng.com/" target="_blank" rel="noopener noreferrer"}
+      :::::::img{src="https://1cloudng.com/assets/OneCloud-Logo-D4GYoCsV.png" alt="1Cloud Next Generation" width="220" .mx-auto}
+      :::::::
+    ::::::
+
+    :::::div{.max-w-2xl.mx-auto}
+    **[1Cloud Next Generation (1CNG)](https://1cloudng.com/)**
+
+    Next-generation cloud infrastructure provider powering security research, development environments, and high-performance deployments. Deploy powerful cloud instances with ultra-fast NVMe SSD storage and flexible pay-as-you-go pricing — powered by One Cloud Next-Gen with **99.95% uptime**. 1CNG provides reliable VPS, dedicated servers, and cloud solutions optimized for security professionals and developers.
+    :::::
+  ::::
+
+  ---
+
+  <!-- Gold Sponsors -->
+  ::::div{.flex.flex-col.items-center.gap-6.w-full}
+    :::::u-badge
+    ---
+    color: warning
+    variant: subtle
+    size: lg
+    icon: i-lucide-award
+    ---
+    Gold Sponsors
+    :::::
+
+    :::::div{.flex.flex-wrap.justify-center.gap-12}
+      ::::::div{.flex.flex-col.items-center.gap-3}
+        :::::::a{href="https://github.com/lily0ng" target="_blank" rel="noopener noreferrer" .flex.flex-col.items-center.gap-2}
+          ::::::::img{src="https://avatars.githubusercontent.com/u/243206330?v=4" alt="Lily Yang" width="100" .rounded-full.mx-auto}
+          ::::::::
+          **Lily Yang**
+        :::::::
+        :::::::::div{.text-sm.text-gray-500}
+        Developer & Security Enthusiast
+        :::::::::
+      ::::::
+
+      ::::::div{.flex.flex-col.items-center.gap-3}
+        :::::::a{href="https://github.com/0xff0ay" target="_blank" rel="noopener noreferrer" .flex.flex-col.items-center.gap-2}
+          ::::::::img{src="https://avatars.githubusercontent.com/u/264521594?v=4" alt="0xff" width="100" .rounded-full.mx-auto}
+          ::::::::
+          **0xff**
+        :::::::
+        :::::::::div{.text-sm.text-gray-500}
+        Offensive Security Researcher
+        :::::::::
+      ::::::
+    :::::
+  ::::
+
+  ---
+
+  <!-- Community Sponsor -->
+  ::::div{.flex.flex-col.items-center.gap-6.w-full}
+    :::::u-badge
+    ---
+    color: neutral
+    variant: subtle
+    size: lg
+    icon: i-lucide-users
+    ---
+    Community Sponsor
+    :::::
+
+    :::::div{.max-w-2xl.mx-auto}
+    **Black Root Community**
+
+    Underground security research community focused on offensive security, vulnerability research, and knowledge sharing among ethical hackers and security researchers.
+    :::::
+  ::::
+
+  ---
+
+  <!-- Become a Sponsor -->
+  ::::div{.flex.flex-col.items-center.gap-6.w-full.mt-4}
+    :::::div{.max-w-2xl.mx-auto}
+
+    ### Become a [Sponsor]{.text-primary}
+
+    Want to support this project and get your brand in front of thousands of security professionals?
+
+    | Tier | Benefits |
+    |------|----------|
+    | **:icon{name="i-lucide-gem" class="text-primary"} Platinum** | Logo on homepage, README, all pages, dedicated sponsor page, social media shoutout |
+    | **:icon{name="i-lucide-award" class="text-yellow-500"} Gold** | Logo on README, sponsor page, social media mention |
+    | **:icon{name="i-lucide-medal" class="text-gray-400"} Silver** | Name on README and sponsor page |
+    | **:icon{name="i-lucide-users" class="text-gray-500"} Community** | Name listed in README |
+
+    :::::
+
+    ::::::u-button
+    ---
+    color: primary
+    size: xl
+    to: mailto:contact@0xff.sh
+    trailing-icon: i-lucide-mail
+    ---
+    Contact for Sponsorship
+    ::::::
+  ::::
+
+  :::
+::
+
+
 <!-- ============================================ -->
 <!-- STATS BAR -->
 <!-- ============================================ -->
