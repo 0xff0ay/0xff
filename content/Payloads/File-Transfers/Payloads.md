@@ -3,7 +3,8 @@ title: Payloads Sample
 description: Ready-to-use file transfer payloads for moving tools between attacker and target machines across Linux, Windows, and cross-platform environments.
 navigation:
   icon: i-lucide-file-up
-  title: File Transfers
+  title: Payloads Sample
+
 ---
 
 File transfer is one of the most fundamental operations during penetration testing. Whether you need to deliver enumeration scripts, move compiled exploits, or exfiltrate sensitive data — having reliable transfer payloads ready is essential.
