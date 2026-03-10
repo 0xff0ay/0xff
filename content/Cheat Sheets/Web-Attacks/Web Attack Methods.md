@@ -1,5 +1,5 @@
 ---
-title: Web Attack Methods - Deep Dive
+title: Web Attack Methods
 description: Comprehensive reference covering all major web application attack methods, techniques, payloads, and exploitation strategies for penetration testing.
 navigation:
   icon: i-lucide-shield-alert

@@ -1,6 +1,6 @@
 :::writing
 ---
-title: Password Cracking Cheatsheet
+title: Password Cracking 
 description: Comprehensive password cracking techniques, tools, and commands for penetration testing engagements.
 navigation:
   icon: i-lucide-lock-keyhole
