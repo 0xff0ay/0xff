@@ -485,7 +485,10 @@ chmod +x /var/www/0xff/deploy.sh
 
 ---
 
-### Vercel
+
+### Vercel (Recommended)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/0xff0ay/0xff)
 
 ```bash
 npm i -g vercel
@@ -494,10 +497,9 @@ vercel
 
 ### Netlify
 
-```bash
-npm run generate
-# Upload .output/public to Netlify
-```
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/0xff0ay/0xff)
+
+
 
 ### Cloudflare Pages
 
