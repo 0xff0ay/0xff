@@ -1,6 +1,6 @@
 ---
 title: Business Logic Flaws
-description: Complete guide to Business Logic Flaws — authentication bypass, price manipulation, race conditions, workflow abuse, privilege escalation, API logic exploitation, payment fraud, feature abuse, and defense strategies for penetration testers and security researchers.
+description: Business Logic Flaws — authentication bypass, price manipulation, race conditions, workflow abuse, privilege escalation, API logic exploitation, payment fraud, feature abuse, and defense strategies for penetration testers and security researchers.
 navigation:
   icon: i-lucide-workflow
   title: Business Logic Flaws
