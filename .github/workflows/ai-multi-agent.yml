@@ -1,0 +1,109 @@
+name: "AI Contributor: Multi-Agent"
+
+on:
+  schedule:
+    - cron: '0 */8 * * *'
+  workflow_dispatch:
+    inputs:
+      agent:
+        description: 'AI Agent (gpt/gemini/llama/mistral)'
+        required: true
+        default: 'gpt'
+      task:
+        description: 'Task for AI'
+        required: true
+        default: 'Documentation improvements'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  ai-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run AI Agent
+        run: |
+          pip install openai anthropic google-generativeai
+
+          cat > ai_agent.py << 'EOF'
+          import os
+          import sys
+
+          agent = os.getenv('AGENT', 'gpt')
+          task = os.getenv('TASK', 'Improve documentation')
+
+          if agent == 'gpt':
+              from openai import OpenAI
+              client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+              response = client.chat.completions.create(
+                  model="gpt-4o",
+                  messages=[{"role": "system", "content": f"You are GPT, an AI contributor. Task: {task}"}]
+              )
+              result = response.choices[0].message.content
+              emoji = "🟢"
+              name = "GPT AI"
+          elif agent == 'gemini':
+              import google.generativeai as genai
+              genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+              model = genai.GenerativeModel('gemini-pro')
+              response = model.generate_content(task)
+              result = response.text
+              emoji = "🟡"
+              name = "Gemini AI"
+          elif agent == 'llama':
+              result = f"LLaMA AI: Task - {task}"
+              emoji = "🟣"
+              name = "LLaMA AI"
+          elif agent == 'mistral':
+              result = f"Mistral AI: Task - {task}"
+              emoji = "🔵"
+              name = "Mistral AI"
+          else:
+              result = f"AI Agent: Task - {task}"
+              emoji = "⚪"
+              name = "AI Agent"
+
+          print(f"{emoji} {result}")
+
+          # Write contribution file
+          with open('ai_contribution.md', 'w') as f:
+              f.write(f"# {name}\n\nTask: {task}\n\n{result}\n")
+
+          # Set output for GitHub
+          with open(os.getenv('GITHUB_OUTPUT', '/tmp/output'), 'a') as f:
+              f.write(f"CONTRIBUTION={result}\n")
+          EOF
+
+          AGENT=${{ github.event.inputs.agent }} TASK="${{ github.event.inputs.task }}" python ai_agent.py
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "ai@contributor"
+          git config --local user.name "${{ github.event.inputs.agent }} AI"
+          git add -A
+          git commit -m "${{ github.event.inputs.agent }}: ${{ github.event.inputs.task }}" || true
+          git push || true
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "🤖 ${{ github.event.inputs.agent }} AI contribution"
+          branch: ai-${{ github.event.inputs.agent }}/contributions
+          delete-branch: true
+          title: "🤖 ${{ github.event.inputs.agent }} AI Contribution"
+          body: |
+            ## AI Contributor: ${{ github.event.inputs.agent }}
+            Task: ${{ github.event.inputs.task }}
+          token: ${{ secrets.GITHUB_TOKEN }}

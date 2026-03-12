@@ -1,0 +1,59 @@
+name: "AI Contributor: Claude"
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task for Claude'
+        required: true
+        default: 'Review and improve documentation'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  claude-contribute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Claude
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude --print "You are Claude, an AI contributor. Task: ${{ github.event.inputs.task }}. Review the repo, find issues, and make useful contributions. If you make changes, create a file called CLAUDE_CHANGES.md with your changes summary." >> claude_output.md
+
+          if [ -s claude_output.md ]; then
+            git config --local user.email "claude@ai.contributor"
+            git config --local user.name "Claude AI"
+            git add -A
+            git commit -m "🤖 Claude AI: ${{ github.event.inputs.task }}" || true
+            git push || true
+          fi
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+
+      - name: Create PR
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "🤖 Claude AI contribution"
+          branch: claude-bot/contributions
+          delete-branch: true
+          title: "🤖 Claude AI Contribution"
+          body: |
+            ## Claude AI Contributor
+            Task: ${{ github.event.inputs.task }}
+          token: ${{ secrets.GITHUB_TOKEN }}

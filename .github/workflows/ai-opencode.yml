@@ -1,0 +1,57 @@
+name: "AI Contributor: OpenCode"
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task for OpenCode'
+        required: true
+        default: 'Improve documentation structure'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  opencode-contribute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run OpenCode
+        run: |
+          # OpenCode AI contribution
+          echo "OpenCode AI Task: ${{ github.event.inputs.task }}"
+          echo "# OpenCode Contribution" > opencode_contrib.md
+          echo "Task: ${{ github.event.inputs.task }}" >> opencode_contrib.md
+          echo "Date: $(date)" >> opencode_contrib.md
+
+          # Add your OpenCode API integration here
+          # For now, we'll make a sample contribution
+
+          git config --local user.email "opencode@ai.contributor"
+          git config --local user.name "OpenCode AI"
+          git add -A
+          git commit -m "🔵 OpenCode AI: ${{ github.event.inputs.task }}" || true
+          git push || true
+        env:
+          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+
+      - name: Create PR
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "🔵 OpenCode AI contribution"
+          branch: opencode-bot/contributions
+          delete-branch: true
+          title: "🔵 OpenCode AI Contribution"
+          body: |
+            ## OpenCode AI Contributor
+            Task: ${{ github.event.inputs.task }}
+          token: ${{ secrets.GITHUB_TOKEN }}
