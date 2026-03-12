@@ -1,0 +1,52 @@
+name: AI Contributor
+
+on:
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task for AI to perform'
+        required: true
+        default: 'Review recent changes and suggest improvements'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  ai-contribute:
+    if: github.event_name == 'workflow_dispatch' || (github.event.comment.body == '/ai' && github.event.issue.pull_request == null)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run AI Task
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          claude --print "${{ github.event.inputs.task || 'Review the repo and suggest improvements' }}" >> ai_response.md
+
+      - name: Create Pull Request
+        if: github.event_name == 'workflow_dispatch'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'AI: automated contribution'
+          branch: ai-contribution
+          delete-branch: true
+          title: 'AI Contribution'
+          body: |
+            Automated AI contribution.
+            Task: ${{ github.event.inputs.task }}
+          ai_response.md: ai_response.md
