@@ -1,0 +1,73 @@
+name: "AI Contributor: Ollama (Free)"
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      model:
+        description: 'Ollama Model'
+        required: true
+        default: 'llama3'
+      task:
+        description: 'Task'
+        required: true
+        default: 'Review and improve documentation'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  ollama-contribute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Ollama
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          oglama pull ${{ github.event.inputs.model || 'llama3' }}
+
+      - name: Run AI Task
+        run: |
+          MODEL=${{ github.event.inputs.model || 'llama3' }}
+          TASK="${{ github.event.inputs.task }}"
+
+          # Run AI and save contribution
+          ollama run "$MODEL" "You are an AI contributor for a penetration testing documentation repo. Your task: $TASK. Review files, suggest improvements, and make useful updates. Save your changes summary." > ai_output.txt
+
+          # Commit if there are changes
+          if [ -s ai_output.txt ]; then
+            echo "# AI Contribution ($MODEL)" > CONTRIBUTING_AI.md
+            echo "Task: $TASK" >> CONTRIBUTING_AI.md
+            echo "Model: $MODEL" >> CONTRIBUTING_AI.md
+            echo "Date: $(date)" >> CONTRIBUTING_AI.md
+            echo "" >> CONTRIBUTING_AI.md
+            cat ai_output.txt >> CONTRIBUTING_AI.md
+
+            git config --local user.email "ollama@ai.local"
+            git config --local user.name "Ollama AI 🦙"
+            git add -A
+            git commit -m "🦙 Ollama AI: $TASK" || true
+            git push || true
+          fi
+
+      - name: Create PR
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "🦙 Ollama AI contribution"
+          branch: ollama-bot/contributions
+          delete-branch: true
+          title: "🦙 Ollama AI Contribution"
+          body: |
+            ## Free Open Source AI Contributor
+            - Model: ${{ github.event.inputs.model || 'llama3' }}
+            - Task: ${{ github.event.inputs.task }}
+            - No API keys required!
+          token: ${{ secrets.GITHUB_TOKEN }}

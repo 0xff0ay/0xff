@@ -1,0 +1,60 @@
+name: "Bot: Security Scan Bot"
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Free Security Scan
+        run: |
+          echo "# Security Scan Report" > security_report.md
+          echo "Date: $(date)" >> security_report.md
+          echo "" >> security_report.md
+
+          # Count markdown files
+          MD_COUNT=$(find content -name "*.md" 2>/dev/null | wc -l)
+          echo "## Documentation Stats" >> security_report.md
+          echo "- Total .md files: $MD_COUNT" >> security_report.md
+
+          # Check for common issues
+          echo "## Quality Checks" >> security_report.md
+
+          # Check for empty files
+          EMPTY=$(find content -name "*.md" -empty 2>/dev/null | wc -l)
+          echo "- Empty files found: $EMPTY" >> security_report.md
+
+          # Check for files without title
+          NOTITLES=$(grep -L "^title:" content/**/*.md 2>/dev/null | wc -l)
+          echo "- Files without title: $NOTITLES" >> security_report.md
+
+          # Create issue with report
+          git config --local user.email "securitybot@local"
+          git config --local user.name "Security Bot 🔒"
+          git add -A
+          git commit -m "🔒 Security Bot: Quality scan" --allow-empty || true
+          git push || true
+
+      - name: Create Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const report = require('fs').readFileSync('security_report.md', 'utf8');
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🔒 Security/Quality Scan Report',
+              body: report
+            })
