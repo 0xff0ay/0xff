@@ -1,5 +1,3 @@
-
-
 ---
 title: Proxy & WAF Bypass
 description: Complete guide to Web Application Firewall and reverse proxy bypass techniques with payloads, encoding tricks, origin discovery, request smuggling, and real-world evasion methodology.
