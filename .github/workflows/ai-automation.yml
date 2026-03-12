@@ -1,0 +1,61 @@
+name: AI Auto Contributor
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task description'
+        required: true
+        default: 'Update documentation and fix issues'
+      ai_model:
+        description: 'AI Model to use'
+        required: false
+        default: 'claude-sonnet-4-20250514'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  ai-contribute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run AI Task
+        uses: anthropic/[email protected]
+        with:
+          api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: ${{ github.event.inputs.ai_model || 'claude-sonnet-4-20250514' }}
+          max_tokens: 4096
+          system: |
+            You are an AI contributor for a penetration testing documentation repo.
+            Your task is: ${{ github.event.inputs.task }}
+            Make useful contributions, updates, and improvements.
+            When you make changes, commit them with proper messages.
+        env:
+          TASK: ${{ github.event.inputs.task }}
+
+      - name: Create Pull Request
+        if: env.AI_MADE_CHANGES == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'AI: automated contribution'
+          branch: ai-bot/contributions
+          delete-branch: true
+          title: '🤖 AI Contribution'
+          body: |
+            Automated AI contribution
+            - Task: ${{ github.event.inputs.task }}
+          token: ${{ secrets.GITHUB_TOKEN }}
