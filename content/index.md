@@ -27,9 +27,9 @@ orientation: horizontal
 #description
 **Zero Day Hunter** · **Offensive Security Researcher** · **Exploit Developer**
 
-Breaking systems to make them stronger. I specialize in vulnerability research, exploit development, red team operations, reverse engineering, and cloud security assessments across critical infrastructure and Fortune 500 companies.
+Breaking systems to make them stronger. I specialize in vulnerability research, exploit development, red team operations, reverse engineering, and cloud security assessments across critical infrastructure and companies.
 
-:icon{name="i-lucide-check-circle" class="text-green-500"} 10+ Vulnerabilities Reported · :icon{name="i-lucide-award" class="text-yellow-500"} Multiple CVEs Published · :icon{name="i-lucide-trophy" class="text-orange-500"} Hall of Fame in 1+ Companies
+<!-- :icon{name="i-lucide-check-circle" class="text-green-500"} 10+ Vulnerabilities Reported · :icon{name="i-lucide-award" class="text-yellow-500"} Multiple CVEs Published · :icon{name="i-lucide-trophy" class="text-orange-500"} Hall of Fame in 1+ Companies -->
 
 #links
   :::u-button
