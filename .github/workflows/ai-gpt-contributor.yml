@@ -1,0 +1,62 @@
+name: GPT-4 Auto Contributor
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task description'
+        required: true
+        default: 'Review and improve documentation'
+      model:
+        description: 'OpenAI Model'
+        required: false
+        default: 'gpt-4-turbo'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  gpt-contribute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run GPT-4 Task
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TASK: ${{ github.event.inputs.task }}
+        run: |
+          npm install -g openai
+          npx openai-cli --model "${{ github.event.inputs.model || 'gpt-4-turbo' }}" \
+            --task "${{ github.event.inputs.task }}" >> gpt_response.md
+
+      - name: Commit Changes
+        if: success()
+        run: |
+          git config --local user.email "ai[bot]@github.com"
+          git config --local user.name "GPT-4 Bot"
+          git add -A
+          git diff --staged --quiet || git commit -m "GPT-4: automated contribution"
+
+      - name: Create Pull Request
+        if: env.GIT_COMMIT
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'GPT-4: automated contribution'
+          branch: gpt-bot/contributions
+          delete-branch: true
+          title: '🤖 GPT-4 Contribution'
+          body: |
+            Automated GPT-4 contribution
+            - Task: ${{ github.event.inputs.task }}
+            - Model: ${{ github.event.inputs.model || 'gpt-4-turbo' }}

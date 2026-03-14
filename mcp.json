@@ -55,6 +55,61 @@
     "sequential-thinking": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-playwright"]
+    },
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@notionhq/client"],
+      "env": {
+        "NOTION_API_KEY": "${NOTION_API_KEY}"
+      }
+    },
+    "aws-kb-retrieval": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-aws-kb-retrieval-server"]
+    },
+    "everart": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-everart"]
+    },
+    "time": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-time"]
+    },
+    "todoist": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-todoist"]
     }
+  },
+  "llm": {
+    "providers": [
+      {
+        "name": "anthropic",
+        "api_key": "${ANTHROPIC_API_KEY}",
+        "default_model": "claude-sonnet-4-20250514",
+        "models": ["claude-opus-4-6", "claude-sonnet-4-6", "claude-haiku-4-5"]
+      },
+      {
+        "name": "openai",
+        "api_key": "${OPENAI_API_KEY}",
+        "default_model": "gpt-4-turbo",
+        "models": ["gpt-4", "gpt-4-turbo", "gpt-3.5-turbo"]
+      },
+      {
+        "name": "google",
+        "api_key": "${GOOGLE_API_KEY}",
+        "default_model": "gemini-pro",
+        "models": ["gemini-pro", "gemini-pro-vision"]
+      },
+      {
+        "name": "ollama",
+        "api_url": "http://localhost:11434",
+        "default_model": "llama3",
+        "models": ["llama3", "mistral", "codellama"]
+      }
+    ]
   }
 }

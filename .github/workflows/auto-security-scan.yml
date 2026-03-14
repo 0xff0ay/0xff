@@ -1,0 +1,43 @@
+name: Auto Security Documentation Update
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**/*.md'
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  security-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan for Security Keywords
+        id: scan
+        run: |
+          echo "Scanning for security topics..."
+          grep -r -l -i "vulnerability\|exploit\|cve\|pentest\|attack" content/ >> security_topics.txt
+          echo "topics_found=$(wc -l < security_topics.txt)" >> $GITHUB_OUTPUT
+
+      - name: Generate Security Summary
+        if: steps.scan.outputs.topics_found > 0
+        run: |
+          echo "# Security Documentation Summary" >> SECURITY_SUMMARY.md
+          echo "Last updated: $(date)" >> SECURITY_SUMMARY.md
+          echo "" >> SECURITY_SUMMARY.md
+          cat security_topics.txt >> SECURITY_SUMMARY.md
+
+      - name: Commit Summary
+        if: steps.scan.outputs.topics_found > 0
+        run: |
+          git config --local user.email "security[bot]@github.com"
+          git config --local user.name "Security Bot"
+          git add SECURITY_SUMMARY.md
+          git commit -m "docs: update security documentation summary" || true
+          git push

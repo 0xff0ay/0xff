@@ -1,0 +1,62 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun:*)",
+      "Bash(npm:*)",
+      "Bash(node:*)",
+      "Bash(npx:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Glob(*)",
+      "Grep(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)"
+    ],
+    "deny": [
+      "Bash(sudo:*)",
+      "Bash(rm -rf / *)",
+      "Bash(chmod 777 *)"
+    ]
+  },
+  "hooks": {
+    "on-init": [
+      {
+        "type": "command",
+        "command": "echo '0xff Security Documentation Repository initialized'"
+      }
+    ],
+    "on-tool-call": [
+      {
+        "type": "log",
+        "format": "tool: {name} - {status}"
+      }
+    ]
+  },
+  "env": {
+    "DEFAULT_MODEL": "claude-sonnet-4-20250514",
+    "MAX_TOKENS": "4096",
+    "TEMPERATURE": "0.7"
+  },
+  "ui": {
+    "showStatusLine": true,
+    "compactMode": false,
+    "colorTheme": "dark"
+  },
+  "autoMemory": {
+    "enabled": true,
+    "path": ".claude/memory"
+  },
+  "agents": {
+    "default": "Pentesting AI",
+    "available": [
+      "Pentesting AI",
+      "Documentation Agent",
+      "Automation Agent",
+      "Research Agent"
+    ]
+  }
+}

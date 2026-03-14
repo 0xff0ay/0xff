@@ -1,0 +1,77 @@
+name: Gemini AI Contributor
+
+on:
+  schedule:
+    - cron: '0 */8 * * *'
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task description'
+        required: true
+        default: 'Analyze and enhance documentation'
+      model:
+        description: 'Gemini Model'
+        required: false
+        default: 'gemini-pro'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  gemini-contribute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Google Generative AI
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: |
+          pip install google-generativeai
+
+      - name: Run Gemini Task
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          TASK: ${{ github.event.inputs.task }}
+        run: |
+          python << 'EOF'
+            import os
+            import google.generativeai as genai
+            genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+            model = genai.GenerativeModel("${{ github.event.inputs.model || 'gemini-pro' }}")
+            response = model.generate_content("""
+              You are an AI contributor for a penetration testing documentation repository.
+              Task: ${{ github.event.inputs.task }}
+              Review the codebase and make useful improvements.
+              When making changes, ensure they are well-documented.
+            """)
+            print(response.text)
+          EOF >> gemini_response.md
+
+      - name: Commit Changes
+        if: success()
+        run: |
+          git config --local user.email "ai[bot]@github.com"
+          git config --local user.name "Gemini AI Bot"
+          git add -A
+          git diff --staged --quiet || git commit -m "Gemini: automated contribution"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'Gemini: automated contribution'
+          branch: gemini-bot/contributions
+          delete-branch: true
+          title: '🤖 Gemini AI Contribution'
+          body: |
+            Automated Gemini AI contribution
+            - Task: ${{ github.event.inputs.task }}
+            - Model: ${{ github.event.inputs.model || 'gemini-pro' }}
