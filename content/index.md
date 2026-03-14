@@ -1,6 +1,6 @@
 ---
 seo:
-  title: 0xff - Offensive Security Researcher | Zero Day Hunter
+  title: 0xff - Offensive Security Researcher | Zero Day Researcher
   description: 0xff — Offensive Security Researcher specializing in Zero Day vulnerabilities, Bug Bounty hunting, Exploit Development, Red Teaming, Cloud Security, and Reverse Engineering. Free tutorials, write-ups, tools, and resources for hackers.
   ogImage: /og-image.png
 ---
@@ -21,13 +21,18 @@ orientation: horizontal
   Currently hunting critical vulnerabilities
   :::
 
-#title
-:icon{name="i-lucide-shield-alert" class="text-primary"} 0xff
+#title 
+
+  0xff 0day
 
 #description
-**Zero Day Hunter** · **Offensive Security Researcher** · **Exploit Developer**
+**Zero Day Researcher** · **Offensive Security Researcher** · **Exploit & Reverse Developer**  · **Hacker**  · **Farmer** · **Programmer** 
 
-Breaking systems to make them stronger. I specialize in vulnerability research, exploit development, red team operations, reverse engineering, and cloud security assessments across critical infrastructure and companies.
+Sometimes when I'm not doing IT work, I work with trees and in the fields. Even though I'm in front of the computer all the time, I'm relaxed about it. And then rule 1, hacker never say - i am hacker - rule 2 - hacker never ask permission and never use ai lol :3
+
+"Hacker by night, farmer by sunrise."
+
+
 
 <!-- :icon{name="i-lucide-check-circle" class="text-green-500"} 10+ Vulnerabilities Reported · :icon{name="i-lucide-award" class="text-yellow-500"} Multiple CVEs Published · :icon{name="i-lucide-trophy" class="text-orange-500"} Hall of Fame in 1+ Companies -->
 
@@ -36,7 +41,7 @@ Breaking systems to make them stronger. I specialize in vulnerability research, 
   ---
   color: primary
   size: xl
-  to: /bug-bounty/bugbounty
+  to: /about/about
   trailing-icon: i-lucide-terminal
   ---
   Start Hacking
