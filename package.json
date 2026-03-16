@@ -24,6 +24,7 @@
     "@nuxtjs/storybook": "^9.0.1",
     "better-sqlite3": "^12.6.2",
     "docus": "latest",
-    "nuxt": "^4.3.1"
+    "nuxt": "^4.3.1",
+    "nuxt-studio": "^1.4.0"
   }
 }

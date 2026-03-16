@@ -7,5 +7,7 @@ export default defineNuxtConfig({
     clientBundle: {
       sizeLimitKb: 512 // Increase limit to 512KB (default is 256KB)
     }
-  }
+  },
+
+  modules: ['nuxt-studio']
 })
